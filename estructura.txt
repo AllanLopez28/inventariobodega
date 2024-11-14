@@ -1,0 +1,44 @@
+proyecto/
+├── index.html
+├── pages/
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── inventory.html
+│   ├── movements.html
+│   ├── users.html
+│   └── reports.html
+├── styles/
+│   ├── styles.css
+│   ├── components/
+│   │   ├── forms.css
+│   │   ├── tables.css
+│   │   ├── buttons.css
+│   │   ├── cards.css
+│   │   └── modal.css
+│   └── pages/
+│       ├── login.css
+│       ├── dashboard.css
+│       └── inventory.css
+├── scripts/
+│   ├── main.js
+│   ├── auth.js
+│   ├── utils/
+│   │   ├── validators.js
+│   │   ├── formatters.js
+│   │   └── api.js
+│   ├── components/
+│   │   ├── Modal.js
+│   │   ├── Table.js
+│   │   ├── Form.js
+│   │   └── Alert.js
+│   └── pages/
+│       ├── login.js
+│       ├── inventory.js
+│       ├── movements.js
+│       └── users.js
+└── assets/
+    └── icons/
+        ├── inventory.svg
+        ├── users.svg
+        ├── reports.svg
+        └── movements.svg

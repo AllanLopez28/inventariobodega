@@ -1,0 +1,185 @@
+ <!-- pages/reports.html -->
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Sistema de Inventario</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/components/navbar.css">
+    <link rel="stylesheet" href="../styles/pages/reports.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <h1>Sistema de Inventario</h1>
+            <div class="user-info">
+                <span id="userName">Administrador</span>
+                <button class="btn btn-danger">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <aside class="sidebar">
+        <div class="menu">
+            <h3>Menú Principal</h3>
+            <ul>
+                <li><a href="inventory.html">Inventario</a></li>
+                <li><a href="reports.html" class="active">Reportes</a></li>
+                <li><a href="users.html">Usuarios</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h2>Reportes del Sistema</h2>
+            <div class="export-buttons">
+                <button class="export-btn" id="exportPDF">
+                    <span>📄</span> Exportar PDF
+                </button>
+                <button class="export-btn" id="exportExcel">
+                    <span>📊</span> Exportar Excel
+                </button>
+            </div>
+        </div>
+
+        <div class="date-filters">
+            <div class="date-group">
+                <label for="startDate">Fecha Inicio:</label>
+                <input type="date" id="startDate" name="startDate">
+            </div>
+            <div class="date-group">
+                <label for="endDate">Fecha Fin:</label>
+                <input type="date" id="endDate" name="endDate">
+            </div>
+            <button class="btn btn-primary" id="filterDates">Filtrar</button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value" id="totalProductsValue">0</div>
+                <div class="stat-label">Total Productos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="lowStockValue">0</div>
+                <div class="stat-label">Productos Stock Bajo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="outOfStockValue">0</div>
+                <div class="stat-label">Productos Sin Stock</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalMovementsValue">0</div>
+                <div class="stat-label">Movimientos</div>
+            </div>
+        </div>
+
+        <div class="reports-grid">
+            <!-- Reporte de Inventario -->
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon">📦</div>
+                    <h3 class="report-title">Estado del Inventario</h3>
+                </div>
+                <div class="report-body">
+                    <div class="chart-container">
+                        <canvas id="inventoryChart"></canvas>
+                    </div>
+                </div>
+                <div class="report-actions">
+                    <button class="btn btn-primary" onclick="downloadReport('inventory')">
+                        Descargar Reporte
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reporte de Movimientos -->
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon">🔄</div>
+                    <h3 class="report-title">Movimientos Recientes</h3>
+                </div>
+                <div class="report-body">
+                    <div class="table-container">
+                        <table class="reports-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Producto</th>
+                                    <th>Tipo</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody id="movementsTableBody">
+                                <!-- Se llenará dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reporte de Stock Bajo -->
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon">⚠️</div>
+                    <h3 class="report-title">Productos en Stock Bajo</h3>
+                </div>
+                <div class="report-body">
+                    <div class="table-container">
+                        <table class="reports-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Stock Actual</th>
+                                    <th>Stock Mínimo</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lowStockTableBody">
+                                <!-- Se llenará dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reporte de Categorías -->
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon">📊</div>
+                    <h3 class="report-title">Distribución por Categorías</h3>
+                </div>
+                <div class="report-body">
+                    <div class="chart-container">
+                        <canvas id="categoriesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Detalles -->
+        <div id="detailsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Detalles del Reporte</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <!-- Contenido dinámico -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button class="btn btn-primary" id="downloadDetailedReport">Descargar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="../script/pages/reports.js"></script>
+</body>
+</html>

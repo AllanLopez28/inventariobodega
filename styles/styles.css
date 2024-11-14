@@ -1,0 +1,174 @@
+/* styles/styles.css */
+:root {
+    --gradient-start: #4f46e5;
+    --gradient-end: #2563eb;
+    --gradient-bg: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    
+    /* Colores principales */
+    --primary-color: #4f46e5;
+    --secondary-color: #2563eb;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    
+    /* Colores de fondo y texto */
+    --background-color: #f8fafc;
+    --text-color: #334155;
+    --text-light: #64748b;
+    --border-color: #e2e8f0;
+    
+    /* Sombras y efectos */
+    --shadow-sm: 0 2px 4px rgba(79, 70, 229, 0.1);
+    --shadow-md: 0 4px 6px rgba(79, 70, 229, 0.1);
+    --shadow-lg: 0 10px 25px rgba(79, 70, 229, 0.1);
+    --shadow-hover: 0 15px 30px rgba(79, 70, 229, 0.15);
+    
+    /* Bordes y espaciados */
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+    
+    /* Transiciones */
+    --transition-all: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    min-height: 100vh;
+}
+
+/* Glassmorphism Mixin (para reutilizar) */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+/* Animaciones globales */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Clases de utilidad */
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+.hover-scale {
+    transition: var(--transition-all);
+}
+
+.hover-scale:hover {
+    transform: scale(1.02);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-all);
+}
+
+.glass-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-5px);
+}
+
+/* Layout principal */
+.main-layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--gradient-bg);
+}
+
+.content-area {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 250px;
+    margin-top: 60px;
+}
+
+/* Contenedores */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Tipografía */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+/* Grid System */
+.grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .grid-cols-4 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .grid-cols-3, 
+    .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+    
+    .content-area {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4 { grid-template-columns: 1fr; }
+    
+    .container {
+        padding: 0 0.5rem;
+    }
+}

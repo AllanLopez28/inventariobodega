@@ -1,0 +1,166 @@
+<!-- pages/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Sistema de Inventario</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/pages/dashboard.css">
+    <link rel="stylesheet" href="../styles/components/modal.css">
+    <link rel="stylesheet" href="../styles/components/buttons.css">
+<link rel="stylesheet" href="../styles/components/alerts.css">
+<link rel="stylesheet" href="../styles/components/forms.css">
+<link rel="stylesheet" href="../styles/components/tables.css">
+<link rel="stylesheet" href="../styles/components/cards.css">
+<link rel="stylesheet" href="../styles/components/navbar.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <h1>Sistema de Inventario</h1>
+            <div class="user-info">
+                <span id="userName">Administrador</span>
+                <button class="btn btn-danger" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <aside class="sidebar">
+        <div class="menu">
+            <h3>Menú Principal</h3>
+            <ul id="menuItems">
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="inventory.html">Inventario</a></li>
+                <li><a href="reports.html">Reportes</a></li>
+                <li><a href="users.html">Usuarios</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h2>Gestión de Productos</h2>
+            <button class="btn btn-primary" id="addProductBtn">
+                <span class="btn-icon">➕</span> Agregar Producto
+            </button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalProducts">0</span>
+                    <span class="stat-label">Total Productos</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="lowStock">0</span>
+                    <span class="stat-label">Stock Bajo</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="categories">0</span>
+                    <span class="stat-label">Categorías</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="products-section">
+            <div class="filters-bar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar productos...">
+                </div>
+                <div class="filters">
+                    <select id="categoryFilter">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                    <select id="statusFilter">
+                        <option value="">Todos los estados</option>
+                        <option value="in_stock">En Stock</option>
+                        <option value="low_stock">Stock Bajo</option>
+                        <option value="out_stock">Sin Stock</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Stock</th>
+                            <th>Stock Mínimo</th>
+                            <th>Estado</th>
+                            <th>Ubicación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Productos se cargarán dinámicamente -->
+                    </tbody>
+                </table>
+                <div id="pagination" class="pagination">
+                    <!-- Paginación se generará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para Agregar/Editar Producto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Agregar Producto</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Nombre del Producto</label>
+                        <input type="text" id="productName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Categoría</label>
+                        <select id="productCategory" name="category_id" required>
+                            <!-- Categorías se cargarán dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="productQuantity">Cantidad</label>
+                            <input type="number" id="productQuantity" name="quantity" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productMinStock">Stock Mínimo</label>
+                            <input type="number" id="productMinStock" name="minimum_stock" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="productLocation">Ubicación</label>
+                        <input type="text" id="productLocation" name="location">
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Descripción</label>
+                        <textarea id="productDescription" name="description" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" id="saveProductBtn">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="../script/pages/dashboard.js"></script>
+</body>
+</html>
